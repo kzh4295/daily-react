@@ -7,13 +7,13 @@ export default function App() {
 
   const handleIncrement = (channel, setter) => {
     if (channel < 255) {
-      setter(channel + 1);
+      setter(channel + 10);
     }
   };
 
   const handleDecrement = (channel, setter) => {
     if (channel > 0) {
-      setter(channel - 1);
+      setter(channel - 10);
     }
   };
 
