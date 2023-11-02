@@ -20,3 +20,4 @@ function App() {
 export default App;
 
 // text1, text2의 변화는 무관하게 반응하고 있습니닷!
+
