@@ -1,81 +1,82 @@
 import React, { useReducer } from 'react';
 
-const reducer = (state, action) => {
+const GAP = 100;
+
+const reducer = (rgbState, action) => {
   switch (action.type) {
-    case 'INCREMENT_R1':
+    case 'INCREMENT_R':
       return {
-        ...state,
-        r: state.r < 255 ? state.r + 100 : state.r,
+        ...rgbState,
+        r: rgbState.r < 255 ? rgbState.r + GAP : rgbState.r,
       };
-    case 'INCREMENT_G1':
+    case 'INCREMENT_G':
       return {
-        ...state,
-        g: state.g < 255 ? state.g + 100 : state.g,
+        ...rgbState,
+        g: rgbState.g < 255 ? rgbState.g + GAP : rgbState.g,
       };
-    case 'INCREMENT_B1':
+    case 'INCREMENT_B':
       return {
-        ...state,
-        b: state.b < 255 ? state.b + 100 : state.b,
+        ...rgbState,
+        b: rgbState.b < 255 ? rgbState.b + GAP : rgbState.b,
       };
-    case 'DECREMENT_R2':
+    case 'DECREMENT_R':
       return {
-        ...state,
-        r: state.r > 0 ? state.r - 100 : state.r,
+        ...rgbState,
+        r: rgbState.r > 0 ? rgbState.r - GAP : rgbState.r,
       };
-    case 'DECREMENT_G2':
+    case 'DECREMENT_G':
       return {
-        ...state,
-        g: state.g > 0 ? state.g - 100 : state.g,
+        ...rgbState,
+        g: rgbState.g > 0 ? rgbState.g - GAP : rgbState.g,
       };
-    case 'DECREMENT_B2':
+    case 'DECREMENT_B':
       return {
-        ...state,
-        b: state.b > 0 ? state.b - 100 : state.b,
+        ...rgbState,
+        b: rgbState.b > 0 ? rgbState.b - GAP : rgbState.b,
       };
     default:
-      return state;
+      return rgbState;
   }
 };
 
-const initialState = {
+const initialRGBState = {
   r: 0,
   g: 0,
   b: 0,
 };
 
 function App() {
-  const [state, dispatch] = useReducer(reducer, initialState);
-  console.log(state);
+  const [rgbState, dispatch] = useReducer(reducer, initialRGBState);
 
-  const onClick = (param) => {
-    if (param.at(-1) === '1') {
-      dispatch({
-        type: `INCREMENT_${param}`,
-      });
-    } else {
-      dispatch({
-        type: `DECREMENT_${param}`,
-      });
-    }
+  const handleIncrease = (colorClass) => {
+    dispatch({
+      type: `INCREMENT_${colorClass}`,
+    });
+  };
+
+  const handleDecrease = (colorClass) => {
+    dispatch({
+      type: `DECREMENT_${colorClass}`,
+    });
   };
 
   return (
     <>
-      <button onClick={() => onClick('R1')}>Increase R</button>
-      <button onClick={() => onClick('G1')}>Increase G</button>
-      <button onClick={() => onClick('B1')}>Increase B</button>
+      <button onClick={() => handleIncrease('R')}>Increase R</button>
+      <button onClick={() => handleIncrease('G')}>Increase G</button>
+      <button onClick={() => handleIncrease('B')}>Increase B</button>
 
       <div
         style={{
-          backgroundColor: `rgba(${state.r}, ${state.g}, ${state.b}, 1)`,
+          backgroundColor: `rgba(${rgbState.r}, ${rgbState.g}, ${rgbState.b}, 1)`,
           width: '100px',
           height: '100px',
         }}
-      ></div>
+      />
 
-      <button onClick={() => onClick('R2')}>Decrease R</button>
-      <button onClick={() => onClick('G2')}>Decrease G</button>
-      <button onClick={() => onClick('B2')}>Decrease B</button>
+      <button onClick={() => handleDecrease('R')}>Decrease R</button>
+      <button onClick={() => handleDecrease('G')}>Decrease G</button>
+      <button onClick={() => handleDecrease('B')}>Decrease B</button>
     </>
   );
 }
